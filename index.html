@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naftan Movie</title>
+  <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/frames.css">
+  <link rel="stylesheet" href="css/media.css">
+</head>
+<body>
+  <div class="web-container">
+    <header class="header">
+      <a href="index.html" class="logo-container">
+        <figure class="logo-img">
+          <img src="assets/images/logo.png" alt="Logo">
+        </figure>
+        <div class="logo-details">
+          <span class="logo-title">NAFTAN</span>
+          <span class="logo-subtitle">Movie</span>
+        </div>
+      </a>
+      <div id="searchMovieContainer" class="search-movie-container">
+        <form action="" class="search-form">
+          <input type="text" name="searchMovie" placeholder="Buscar por título, actor o director..." autocomplete="off" class="search-input">
+          <figure id="searchLoader" class="search-loader hide"></figure>
+            <!--
+              Render del loader
+            -->
+          </figure>
+        </form>
+        <ol class="movie-list hide">
+          <!--
+            Render de peliculas del buscador
+          -->
+        </ol>
+      </div>
+      <div class="social-container">
+        <a href="https://www.facebook.com/" target="_blank">
+          <figure class="social-img">
+            <img src="assets/images/facebook.png" alt="Facebook">
+          </figure>
+        </a>
+        <a href="https://twitter.com/" target="_blank">
+          <figure class="social-img">
+            <img src="assets/images/twitter.png" alt="Twitter">
+          </figure>
+        </a>
+        <a href="https://www.instagram.com/" target="_blank">
+          <figure class="social-img">
+            <img src="assets/images/instagram.png" alt="Instagram">
+          </figure>
+        </a>
+      </div>
+    </header>
+    <main class="main">
+      <strong id="movieTitle" class="movie-title hide"></strong>
+      <section id="suggestMoviesContainer" class="suggested-movies-container">
+        <h1>
+          <!--
+            Render del título de la sección de sugerncias
+          -->
+        </h1>
+        <figure id="suggestedLoader" class="loader-container hide">
+          <!--
+            Render del loader
+          -->
+        </figure>
+        <div id="suggestedMovies" class="suggested-movies">
+          <!--
+            Render de películas sugeridas
+          -->
+        </div>
+      </section>
+      <section id="mainMoviesContainer" class="main-movies-container">
+        <h1>
+          <!--
+            Render del título de la sección principal
+          -->
+        </h1>
+        <figure id="mainLoader" class="loader-container hide">
+          <!--
+            Render del loader
+          -->
+        </figure>
+        <div id="mainMovies" class="main-movies">
+          <!--
+            Render de películas por categoría
+          -->
+        </div>
+        <div id="pageNumberContainer" class="page-number-container">
+          <span class="back">Atrás</span><span class="page-number">1</span><span class="next">Siguiente</span>
+        </div>
+      </section>
+      <div id="movieModal" class="movie-modal hide">
+        <div class="movie-details-container hide">
+          <!--
+            Render del modal para cada película
+          -->
+        </div>
+      </div>
+      <section class="options-movies-container">
+        <section id="categoryMoviesContainer" class="category-movies-container">
+          <div class="category-header-container">
+            <div class="arrow-container hide"></div>
+            <h2>Categorías</h2>
+          </div>
+          <ol id="categoryList" class="category-list hide">
+            <li>
+              <span data-genre="action">Acción</span>
+            </li>
+            <li>
+              <span data-genre="adventure">Aventura</span>
+            </li>
+            <li>
+              <span data-genre="animation">Animación</span>
+            </li>
+            <li>
+              <span data-genre="biography">Biografía</span>
+            </li>
+            <li>
+              <span data-genre="comedy">Comedia</span>
+            </li>
+            <li>
+              <span data-genre="crime">Crimen</span>
+            </li>
+            <li>
+              <span data-genre="documentary">Documental</span>
+            </li>
+            <li>
+              <span data-genre="drama">Drama</span>
+            </li>
+            <li>
+              <span data-genre="family">Familia</span>
+            </li>
+            <li>
+              <span data-genre="fantasy">Fantasía</span>
+            </li>
+            <li>
+              <span data-genre="film-noir">Cine negro</span>
+            </li>
+            <li>
+              <span data-genre="game-show">Programa de juegos</span>
+            </li>
+            <li>
+              <span data-genre="history">Historia</span>
+            </li>
+            <li>
+              <span data-genre="horror">Terror</span>
+            </li>
+            <li>
+              <span data-genre="music">Música</span>
+            </li>
+            <li>
+              <span data-genre="musical">Musical</span>
+            </li>
+            <li>
+              <span data-genre="mystery">Misterio</span>
+            </li>
+            <li>
+              <span data-genre="news">Noticias</span>
+            </li>
+            <li>
+              <span data-genre="reality-tv">Reality TV</span>
+            </li>
+            <li>
+              <span data-genre="romance">Romance</span>
+            </li>
+            <li>
+              <span data-genre="sci-fi">Ciencia ficción</span>
+            </li>
+            <li>
+              <span data-genre="sport">Deporte</span>
+            </li>
+            <li>
+              <span data-genre="talk-show">Programa de entrevistas</span>
+            </li>
+            <li>
+              <span data-genre="thriller">Suspenso</span>
+            </li>
+            <li>
+              <span data-genre="war">Guerra</span>
+            </li>
+            <li>
+              <span data-genre="western">Vaqueros (Oeste)</span>
+            </li>
+          </ol>
+        </section>
+      </section>
+    </main>
+    <footer class="footer">
+      <p>Naftan Movie | &copy; 2020</p>
+    </footer>
+  </div>
+  <script src="js/scripts.js"></script>
+</body>
+</html>
