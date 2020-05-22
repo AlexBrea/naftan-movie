@@ -223,10 +223,10 @@ a {
   font-size: 20px;
 }
 .main-movies {
-  padding: 15px;
+  padding: 15px 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 .main-movie-img {
   margin-bottom: 20px;
