@@ -193,7 +193,7 @@ a {
   font-size: 20px;
 }
 .suggested-movies {
-  margin: 25px 15px 15px 15px;
+  padding: 15px;
   overflow-x: auto;
   white-space: nowrap;
 }
@@ -224,7 +224,7 @@ a {
   font-size: 20px;
 }
 .main-movies {
-  padding: 25px 15px 0 15px;
+  padding: 15px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

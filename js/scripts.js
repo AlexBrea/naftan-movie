@@ -2,6 +2,7 @@
   /* INICIO INITIAL VARIABLES */
   const initialPage = 1
   const mainSection = 'main'
+  let counter = 0
   /* FIN INITIAL VARIABLES */
 
   /* INICIO DOM VARIABLES */
@@ -342,15 +343,23 @@
     $movieTitle.classList.add('hide')
   }
 
-  function renderMoviesList(section, moviesList) {
-    const $moviesContainer = document.getElementById(`${section}Movies`)
+  function renderMoviesList(section, moviesList, count) {
+    const $sectionMovies = document.getElementById(`${section}Movies`)
     moviesList.forEach(movie => {
       const movieTemplate = movieTemplateHTML(section, movie)
-      $moviesContainer.append(movieTemplate)
+      $sectionMovies.append(movieTemplate)
       const $image = movieTemplate.querySelector('img')
-      $image.addEventListener('load', (event) => {
-        event.target.classList.remove('hide')
-        event.target.classList.add('fadeIn')
+      counter = 0
+      $image.addEventListener('load', () => {
+        counter++
+        if (counter === count) {
+          let imageMovies = $sectionMovies.querySelectorAll(`.${section}-movie-img`)
+          showHideLoader(section)
+          imageMovies.forEach(imageMovie => {
+            imageMovie.querySelector('img').classList.remove('hide')
+            imageMovie.querySelector('img').classList.add('fadeIn')
+          })
+        }
       })
       function showHideMovieTitle(event) {
         if(!event.matches) {
@@ -365,7 +374,6 @@
       showHideMovieTitle(responsive)
       $image.addEventListener('click', () => showModalInfo(movie))
     })
-    showHideLoader(section)
   }
   /* FIN MOVIE RENDER */
 
@@ -373,11 +381,12 @@
   /* INICIO GET MOVIES */
   async function getSuggestedMovies(section) {
     const $sectionMovies = document.getElementById(`${section}Movies`)
+    const moviesNumber = 10
     try {
       showHideLoader(section)
       $suggestMoviesContainer.querySelector('h1').textContent = 'Top 10 - Descargas'
-      const {data: {movies}} = await getMovieList(`${BASE_API_MOVIELIST_URL}?limit=10&sort_by=download_count`)
-      renderMoviesList(section, movies)
+      const {data: {movies}} = await getMovieList(`${BASE_API_MOVIELIST_URL}?limit=${moviesNumber}&sort_by=download_count`)
+      renderMoviesList(section, movies, moviesNumber)
       $sectionMovies.classList.remove('error-style')
     } catch (error) {
       showHideLoader(section)
@@ -388,14 +397,15 @@
 
   async function getCategoryMovies(page, origin, section, value, genre) {
     const $sectionMovies = document.getElementById(`${section}Movies`)
+    const moviesNumber = 20
     try {
       $pageNumberContainer.classList.add('hide')
       document.getElementById(`${section}Movies`).textContent = ""
       showHideLoader(section)
       $mainMoviesContainer.querySelector('h1').textContent = `Categoría: ${value}`
-      const {data} = await getMovieList(`${BASE_API_MOVIELIST_URL}?genre=${genre}&sort_by=year&page=${page}&limit=20`)
+      const {data} = await getMovieList(`${BASE_API_MOVIELIST_URL}?genre=${genre}&sort_by=year&page=${page}&limit=${moviesNumber}`)
       let pageNumber = Math.ceil(data.movie_count / data.limit)
-      renderMoviesList(section, data.movies, page, pageNumber)
+      renderMoviesList(section, data.movies, moviesNumber)
       if(page >= 0 && pageNumber >= 0) {
         if(pageNumber === 0) {
           pageNumber = 1
@@ -417,14 +427,15 @@
 
   async function getMainMovies(page, origin, section) {
     const $sectionMovies = document.getElementById(`${section}Movies`)
+    const moviesNumber = 20
     try {
       $pageNumberContainer.classList.add('hide')
       document.getElementById(`${section}Movies`).textContent = ""
       showHideLoader(section)
       $mainMoviesContainer.querySelector('h1').textContent = 'Lo más actual'
-      const {data} = await getMovieList(`${BASE_API_MOVIELIST_URL}?sort_by=year&page=${page}&limit=20`)
+      const {data} = await getMovieList(`${BASE_API_MOVIELIST_URL}?sort_by=year&page=${page}&limit=${moviesNumber}`)
       let pageNumber = Math.ceil(data.movie_count / data.limit)
-      renderMoviesList(section, data.movies, page, pageNumber)
+      renderMoviesList(section, data.movies, moviesNumber)
       if(page >= 0 && pageNumber >= 0) {
         if(pageNumber === 0) {
           pageNumber = 1

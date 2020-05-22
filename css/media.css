@@ -1,12 +1,5 @@
 @media only screen and (max-width: 1024px) {
-  .suggested-movie-img img {
-    max-width: 175px;
-  }
-  .main-movie-img img {
-    max-width: 175px;
-  }
   .main-movies {
-    padding: 25px 0 0 0;
     justify-content: space-evenly;
   }
 }
@@ -34,9 +27,6 @@
   }
   .suggested-movies-container {
     padding: 20px 20px 10px;
-  }
-  .suggested-movies {
-    margin: 25px 10px 10px;
   }
   .main {
     grid-row: 2 / 3;
@@ -76,24 +66,17 @@
   .search-input {
     font-size: 14px;
   }
-  .suggested-movies {
-    margin: 15px 0 0;
-  }
-  .suggested-movie-img img {
-    max-width: 175px;
-  }
   .main-movies {
-    padding: 15px 0 0 0;
-    justify-content: space-between;
-  }
-  .main-movie-img img {
-    max-width: 165px;
+    justify-content: center;
   }
   .suggested-movies-container h1 {
     font-size: 18px;
   }
   .main-movies-container h1 {
     font-size: 18px;
+  }
+  .main-movie-img img {
+    max-width: 250px;
   }
   .movie-details-img {
     float: none;
@@ -137,14 +120,5 @@
   }
   .download-title {
     padding-top: 15px;
-  }
-}
-
-@media only screen and (max-width: 375px) {
-  .main-movies {
-    justify-content: center;
-  }
-  .main-movie-img img {
-    max-width: 200px;
   }
 }
