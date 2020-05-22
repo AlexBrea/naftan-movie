@@ -2,7 +2,6 @@
   /* INICIO INITIAL VARIABLES */
   const initialPage = 1
   const mainSection = 'main'
-  let counter = 0
   /* FIN INITIAL VARIABLES */
 
   /* INICIO DOM VARIABLES */
@@ -345,14 +344,14 @@
 
   function renderMoviesList(section, moviesList, count) {
     const $sectionMovies = document.getElementById(`${section}Movies`)
-    counter = 0
+    window[`${section}Counter`] = 0
     moviesList.forEach(movie => {
       const movieTemplate = movieTemplateHTML(section, movie)
       $sectionMovies.append(movieTemplate)
       const $image = movieTemplate.querySelector('img')
       $image.addEventListener('load', () => {
-        counter++
-        if (counter === count) {
+        window[`${section}Counter`]++
+        if (window[`${section}Counter`] === count) {
           let imageMovies = $sectionMovies.querySelectorAll(`.${section}-movie-img`)
           showHideLoader(section)
           imageMovies.forEach(imageMovie => {
