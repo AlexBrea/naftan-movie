@@ -345,11 +345,11 @@
 
   function renderMoviesList(section, moviesList, count) {
     const $sectionMovies = document.getElementById(`${section}Movies`)
+    counter = 0
     moviesList.forEach(movie => {
       const movieTemplate = movieTemplateHTML(section, movie)
       $sectionMovies.append(movieTemplate)
       const $image = movieTemplate.querySelector('img')
-      counter = 0
       $image.addEventListener('load', () => {
         counter++
         if (counter === count) {
