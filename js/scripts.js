@@ -126,7 +126,7 @@
   /* INICIO LOADER RENDER */
   function createLoader(section) {
     const $loader = document.createElement('img')
-    $loader.setAttribute('src', 'assets/images/loader.gif')
+    $loader.setAttribute('src', './assets/images/loader.gif')
     document.getElementById(`${section}Loader`).append($loader)
   }
 
