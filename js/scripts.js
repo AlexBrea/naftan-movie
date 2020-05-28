@@ -93,21 +93,21 @@
   async function getSearchMovies(data) {
     try {
       $body.addEventListener('mousedown', clickBody)
-      showHideLoader('search')
+      showLoader('search')
       const {data: {movies: searchMovies}} = await getMovieList(`${BASE_API_MOVIELIST_URL}?query_term=${data}`)
       if(searchMovies) {
-        showHideLoader('search')
+        hideLoader('search')
         renderSearchMovies(searchMovies)
         $searchResultList.classList.remove('error-style')
         showElements()
       } else {
-        showHideLoader('search')
+        hideLoader('search')
         $searchResultList.classList.add('error-style')
         showElements()
         return $searchResultList.textContent = 'No hemos podido encontrar lo que buscas'
       }
     } catch (error) {
-      showHideLoader('search')
+      hideLoader('search')
       $searchResultList.classList.add('error-style')
       showElements()
       return $searchResultList.textContent = error.message
@@ -130,15 +130,17 @@
     document.getElementById(`${section}Loader`).append($loader)
   }
 
-  function showHideLoader(section) {
+  function showLoader (section) {
     const $loaderContainer = document.getElementById(`${section}Loader`)
     $loaderContainer.textContent = ""
     createLoader(section)
-    if($loaderContainer.classList.contains('hide')) {
-      $loaderContainer.classList.remove('hide')
-    } else {
-      $loaderContainer.classList.add('hide')
-    }
+    $loaderContainer.classList.remove('hide')
+  }
+
+  function hideLoader(section) {
+    const $loaderContainer = document.getElementById(`${section}Loader`)
+    $loaderContainer.textContent = ""
+    $loaderContainer.classList.add('hide')
   }
   /* FIN LOADER RENDER */
   
@@ -342,7 +344,7 @@
     $movieTitle.classList.add('hide')
   }
 
-  function renderMoviesList(section, moviesList, count) {
+  function renderMoviesList(section, moviesList) {
     const $sectionMovies = document.getElementById(`${section}Movies`)
     window[`${section}Counter`] = 0
     moviesList.forEach(movie => {
@@ -351,15 +353,16 @@
       const $image = movieTemplate.querySelector('img')
       $image.addEventListener('load', () => {
         window[`${section}Counter`]++
-        if (window[`${section}Counter`] === count) {
+        if (window[`${section}Counter`] === moviesList.length) {
           let imageMovies = $sectionMovies.querySelectorAll(`.${section}-movie-img`)
-          showHideLoader(section)
+          hideLoader(section)
           imageMovies.forEach(imageMovie => {
             imageMovie.querySelector('img').classList.remove('hide')
             imageMovie.querySelector('img').classList.add('fadeIn')
           })
         }
       })
+
       function showHideMovieTitle(event) {
         if(!event.matches) {
           $image.addEventListener('mousemove', showMovieTitle)
@@ -380,15 +383,14 @@
   /* INICIO GET MOVIES */
   async function getSuggestedMovies(section) {
     const $sectionMovies = document.getElementById(`${section}Movies`)
-    const moviesNumber = 10
     try {
-      showHideLoader(section)
+      showLoader(section)
       $suggestMoviesContainer.querySelector('h1').textContent = 'Top 10 - Descargas'
-      const {data: {movies}} = await getMovieList(`${BASE_API_MOVIELIST_URL}?limit=${moviesNumber}&sort_by=download_count`)
-      renderMoviesList(section, movies, moviesNumber)
+      const {data: {movies}} = await getMovieList(`${BASE_API_MOVIELIST_URL}?limit=10&sort_by=download_count`)
+      renderMoviesList(section, movies)
       $sectionMovies.classList.remove('error-style')
     } catch (error) {
-      showHideLoader(section)
+      hideLoader(section)
       $sectionMovies.classList.add('error-style')
       $sectionMovies.textContent = error.message
     }
@@ -396,15 +398,14 @@
 
   async function getCategoryMovies(page, origin, section, value, genre) {
     const $sectionMovies = document.getElementById(`${section}Movies`)
-    const moviesNumber = 20
     try {
       $pageNumberContainer.classList.add('hide')
       document.getElementById(`${section}Movies`).textContent = ""
-      showHideLoader(section)
+      showLoader(section)
       $mainMoviesContainer.querySelector('h1').textContent = `Categoría: ${value}`
-      const {data} = await getMovieList(`${BASE_API_MOVIELIST_URL}?genre=${genre}&sort_by=year&page=${page}&limit=${moviesNumber}`)
+      const {data} = await getMovieList(`${BASE_API_MOVIELIST_URL}?genre=${genre}&sort_by=year&page=${page}&limit=20`)
       let pageNumber = Math.ceil(data.movie_count / data.limit)
-      renderMoviesList(section, data.movies, moviesNumber)
+      renderMoviesList(section, data.movies)
       if(page >= 0 && pageNumber >= 0) {
         if(pageNumber === 0) {
           pageNumber = 1
@@ -418,7 +419,7 @@
       }
       $sectionMovies.classList.remove('error-style')
     } catch (error) {
-      showHideLoader(section)
+      hideLoader(section)
       $sectionMovies.classList.add('error-style')
       $sectionMovies.textContent = error.message
     }
@@ -426,15 +427,14 @@
 
   async function getMainMovies(page, origin, section) {
     const $sectionMovies = document.getElementById(`${section}Movies`)
-    const moviesNumber = 20
     try {
       $pageNumberContainer.classList.add('hide')
       document.getElementById(`${section}Movies`).textContent = ""
-      showHideLoader(section)
+      showLoader(section)
       $mainMoviesContainer.querySelector('h1').textContent = 'Lo más actual'
-      const {data} = await getMovieList(`${BASE_API_MOVIELIST_URL}?sort_by=year&page=${page}&limit=${moviesNumber}`)
+      const {data} = await getMovieList(`${BASE_API_MOVIELIST_URL}?sort_by=year&page=${page}&limit=20`)
       let pageNumber = Math.ceil(data.movie_count / data.limit)
-      renderMoviesList(section, data.movies, moviesNumber)
+      renderMoviesList(section, data.movies)
       if(page >= 0 && pageNumber >= 0) {
         if(pageNumber === 0) {
           pageNumber = 1
@@ -446,7 +446,7 @@
       }
       $sectionMovies.classList.remove('error-style')
     } catch (error) {
-      showHideLoader(section)
+      hideLoader(section)
       $sectionMovies.classList.add('error-style')
       $sectionMovies.textContent = error.message
     }
